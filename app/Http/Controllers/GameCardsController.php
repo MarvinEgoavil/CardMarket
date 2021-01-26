@@ -85,16 +85,16 @@ class GameCardsController extends Controller
     public function show($name)
     {
         $response = [];
-        $game_cards = game_cards::where('name', 'LIKE', '%{$name}%')->paginate(10);
+        $game_cards = DB::select("SELECT * FROM game_cards WHERE name LIKE '%$name%'");
         if (!$game_cards) {
             return response()->json([
                 'message' => 'No se encontraron registros'
             ], 404);
         }
-        foreach ($game_cards as $game_card) {
 
-            $sale = sales::where('id', $game_card->sale_id)->get();
-            $user = user::where('id', $game_card->user_id)->get();
+        foreach ($game_cards as $game_card) {
+            $sale = sales::where('id', $game_card->sale_id)->first();
+            $user = user::where('id', $game_card->user_id)->first();
 
             $aux =  [
                 'name_card' => $game_card->name,
@@ -105,14 +105,15 @@ class GameCardsController extends Controller
             ];
             $response[] = $aux;
         }
+
         if (!$response) {
             return response()->json([
-                $response
-            ], 200);
+                'message' => 'No se encontraron registros'
+            ], 404);
         }
         return response()->json([
-            'message' => 'No se encontraron registros'
-        ], 404);
+            $response
+        ], 200);
     }
 
     /**
