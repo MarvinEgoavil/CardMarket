@@ -9,7 +9,7 @@ class game_cards extends Model
     protected $table = "game_cards";
 
     protected $fillable = [
-        'name', 'description', 'user_id', 'sales_id'
+        'name', 'description', 'user_id', 'sale_id'
     ];
 
     public function users()

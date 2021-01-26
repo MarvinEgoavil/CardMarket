@@ -3,12 +3,12 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\User;
-use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 use App\Models\roles;
 use App\Models\sales;
 use App\Models\collection;
 use App\Models\game_cards;
+use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 
 /*
@@ -24,38 +24,56 @@ use App\Models\game_cards;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->unique()->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'token'=>'',
-        'role'=>$faker->randomElement($array=array('administrador','profesional','particular')),
+        'token'  => '',
+        'role' => $faker->randomElement($array = array('administrador', 'profesional', 'particular')),
     ];
 });
 
-$factory->define(sales::class,function(faker $faker) {
-    return  [
-       'quantity' => $faker->numberBetween($min=1,$max=20),
-       'price'=>$faker->randomFloat($nbMaxDecimals=1,$min=10,$max= 50000),
-    ];
-});
 
-$factory->define(collection::class,function(faker $faker){
+$factory->state(roles::class, 'admin', function (Faker $faker) {
     return [
-        'name' => $faker -> name,
-        'description' =>$faker->text,
-        'user_id'=> $faker->numberBetween($min=1,$max=30),
-        'sales_id'=>$faker->numerBetween($min=1,$max=20),
+        'name' => 'Administrador',
+        'description' => 'Rol con acceso total al sistema',
     ];
 });
 
-$factory->define(game_cards::class,function(faker $faker) {
+$factory->state(roles::class, 'profesional', function (Faker $faker) {
     return [
-        'name'=>$faker->name,
-        'description'=>$faker->text,
-        'user_id'=>$faker->numberBetween($min=1, $max =30),
-        'sales_id'=>$faker->numberBetween($min =1,$max=20),
+        'name' => 'Profesional',
+        'description' => 'Persona con experiencia en el manejo de las cartas del juego',
+    ];
+});
 
-    ],
+$factory->state(roles::class, 'neofito', function (Faker $faker) {
+    return [
+        'name' => 'Particular',
+        'description' => 'Persona con poca experiencia en las cartas del juego',
+    ];
+});
 
+$factory->define(sales::class, function (Faker $faker) {
+    return [
+        'quantity' => $faker->numberBetween($min = 1, $max = 20),
+        'price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 50000),
+    ];
+});
+
+$factory->define(collection::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+        'symbol' => $faker->imageUrl($width = 640, $height = 480),
+        'edition_date' => $faker->dateTimeInInterval($startDate = 'now', $interval = '+ 60 days', $timezone = null),
+    ];
+});
+
+$factory->define(game_cards::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+        'description' => $faker->text,
+        'user_id' => $faker->numberBetween($min = 1, $max = 30),
+        'sale_id' => $faker->numberBetween($min = 1, $max = 20),
+    ];
 });

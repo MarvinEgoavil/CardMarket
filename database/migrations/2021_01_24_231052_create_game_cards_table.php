@@ -19,9 +19,9 @@ class CreateGameCardsTable extends Migration
             $table->string('description');
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('sales_id');
+            $table->unsignedBigInteger('sale_id');
             $table->foreign('sale_id')->references('id')->on('sales');
 
             $table->timestamps();

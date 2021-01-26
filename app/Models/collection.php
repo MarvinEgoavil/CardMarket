@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 
-class collections extends Model
+class collection extends Model
 {
     protected $table = "collections";
 

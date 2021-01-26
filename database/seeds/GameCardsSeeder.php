@@ -11,6 +11,6 @@ class GameCardsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\models\game_cards::class, 60)->create();
+        factory(App\Models\game_cards::class, 60)->create();
     }
 }
