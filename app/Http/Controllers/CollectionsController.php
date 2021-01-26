@@ -35,7 +35,7 @@ class CollectionController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => 'Incomplete data'], 422);
         }
-        $collection = collections::create([
+        $collection = collection::create([
             'name' => $request->name,
             'symbol' => $request->symbol,
             'edition_date' => $request->edition_date,
@@ -56,7 +56,7 @@ class CollectionController extends Controller
      * @param  \App\Models\collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function show(collections $collection)
+    public function show(collection $collection)
     {
         //
     }
@@ -67,7 +67,7 @@ class CollectionController extends Controller
      * @param  \App\Models\collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function edit(collections $collection)
+    public function edit(collection $collection)
     {
         //
     }
@@ -79,7 +79,7 @@ class CollectionController extends Controller
      * @param  \App\Models\collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, collections $collection)
+    public function update(Request $request, collection $collection)
     {
         //
     }
@@ -90,7 +90,7 @@ class CollectionController extends Controller
      * @param  \App\Models\collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function destroy(collections $collection)
+    public function destroy(collection $collection)
     {
         //
     }
